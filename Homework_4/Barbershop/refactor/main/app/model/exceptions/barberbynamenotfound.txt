@@ -1,7 +1,0 @@
-package mk.ukim.finki.barber_application.model.exceptions;
-
-public class BarberByNameNotFoundException extends RuntimeException {
-    public BarberByNameNotFoundException() {
-        super("You have to choose barber from the list!");
-    }
-}
