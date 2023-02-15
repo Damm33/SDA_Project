@@ -1,0 +1,50 @@
+<div xmlns:th="http://www.thymeleaf.org">
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Додади или промени улица</h1>
+    </div>
+</section>
+
+<div class="container" style="align-items: center">
+    <div class="row">
+        <div class="col-md-5">
+            <form th:method="POST" th:action="@{/showAndAddStreet/add-street}">
+                <input id="id" type="hidden" name="id" th:value="(${selectedStreet} != null ? ${selectedStreet.getId()} : '')">
+                <div class="form-group">
+                    <label for="streetName">Име на улица</label>
+                    <input type="text"
+                           class="form-control"
+                           id="streetName"
+                           name="streetName"
+                           th:value="(${selectedStreet} != null ? ${selectedStreet.getName()} : '')"
+                           required
+                           placeholder="Enter street name">
+                </div>
+                <div class="form-group">
+                    <label for="streetLat">Географска ширина</label>
+                    <input type="text"
+                           class="form-control"
+                           id="streetLat"
+                           name="streetLat"
+                           th:value="(${selectedStreet} != null ? ${selectedStreet.getLatitude()} : '')"
+                           required
+                           placeholder="Latitude">
+                </div>
+                <div class="form-group">
+                    <label for="streetLong">Географска должина</label>
+                    <input type="text"
+                           class="form-control"
+                           id="streetLong"
+                           name="streetLong"
+                           th:value="(${selectedStreet} != null ? ${selectedStreet.getLongitude()} : '')"
+                           required
+                           placeholder="Longitude">
+                </div>
+                <button id="addStreetSubmit" type="submit" class="btn btn-secondary">Поднеси</button>
+                <a type="button" class="btn btn-secondary" th:href="@{/showAndAddStreet}" style="font-family:'Andale Mono', monospace">Назад</a>
+            </form><hr>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,88 @@
+package mk.ukim.finki.barber_application.web.controller;
+
+import mk.ukim.finki.barber_application.model.Fuel;
+import mk.ukim.finki.barber_application.model.exceptions.FuelNotFoundException;
+import mk.ukim.finki.barber_application.service.FuelService;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+
+@Controller
+@RequestMapping("/showAndAddbarber")
+public class ShowAndAddbarberlController {
+
+private final BarberService barberService;
+
+public ShowAndAddbarberController(BarberService barberService) {
+this.barberService = barberService;
+}
+
+@GetMapping
+public String getShowAndAddbarberPage(@RequestParam(required = false) String error, Model model){
+
+if(error != null && error.isEmpty()){
+model.addAttribute("hasError", true);
+model.addAttribute("error", error);
+}
+
+model.addAttribute("showAllBarber", this.barberService.findAll());
+model.addAttribute("title", "Сите фризерски салони");
+model.addAttribute("bodyContent", "showAllBarber");
+
+return "master-template";
+}
+
+@GetMapping("/addNewBarber")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+public String addNewBarber(Model model){
+
+model.addAttribute("title", "Додади нов фризерски салон");
+model.addAttribute("bodyContent", "addNewBarber");
+
+return "master-template";
+}
+
+@PostMapping("/add-barber")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+public String addbarber(@RequestParam(required = false) Long id, HttpServletRequest request){
+
+String barberName = request.getParameter("barberName");
+Float barberLat = Float.parseFloat(request.getParameter("barberLat"));
+Float barberLong = Float.parseFloat(request.getParameter("barberLong"));
+String imageUrl = request.getParameter("imageUrl");
+String pageLink = request.getParameter("pageLink");
+
+if(id != null){
+this.barberService.editBarber(id, barberName, barberLat, barberLong, imageUrl, pageLink);
+}
+else {
+this.barberService.addNewBarber(barberName, barberLat, barberLong, imageUrl, pageLink);
+}
+
+return "redirect:/showAndAddbarber";
+}
+
+@DeleteMapping("/delete/{id}")
+public String deleteFuel(@PathVariable Long id){
+
+this.barberService.deleteById(id);
+return "redirect:/showAndAddbarber";
+}
+
+@GetMapping("/edit-barber/{id}")
+public String editBarber(@PathVariable Long id, Model model){
+
+if(this.barberService.findById(id).isPresent()){
+Fuel fuel = this.barberService.findById(id).get();
+model.addAttribute("selectedBarber", barber);
+model.addAttribute("title", "Додади нов фризерски салон");
+model.addAttribute("bodyContent", "addNewBarber");
+
+return "master-template";
+}
+return "redirect:/showAndAddbarber?error="+ new barberNotFoundException(id).getMessage();
+}
+}
