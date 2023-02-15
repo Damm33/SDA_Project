@@ -1,0 +1,24 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div class="container">
+    <form class="form-signin mt-xl-5" th:method="POST" th:action="@{/changeProfile}">
+        <h2 class="form-signin-heading">Промени го твојот профил</h2>
+
+        <p>
+        <span style="font-weight: bold">Име:</span>
+            <input type="text" id="nameProfile" name="nameProfile" class="form-control"
+                   th:value="${user.getName()}"
+                   autofocus="">
+        </p>
+
+        <p>
+            <span style="font-weight: bold">Презиме:</span>
+            <input type="text" id="surnameProfile" name="surnameProfile" class="form-control"
+                   th:value="${user.getSurname()}"
+                   autofocus="">
+        </p>
+
+        <button class="btn btn-lg btn-success btn-block" type="submit">Поднеси</button>
+    </form>
+</div>
+</div>

@@ -1,0 +1,46 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h3 style="font-family: 'Arial Rounded MT Bold',sans-serif">Најблиските Фризерски салони до Вашата локација</h3>
+        <h3 style="font-family: 'Arial Rounded MT Bold', sans-serif; font-style: oblique; color: darkslategray" th:text="${session.location}"></h3> <br/>
+        <div th:if="${hasError}" th:text="${error}" class="text-danger"
+             style="margin-left: -50px; font-size: 20px;"></div>
+        <hr><br/>
+
+        <div style="float: left; padding-left: 210px">
+            <form th:action="@{/showBarbershops}" th:method="POST">
+                <ul style="list-style: none">
+                    <b style="font-family: 'Arial Rounded MT Bold',sans-serif; font-style: oblique">Име</b><br/>
+                    <li th:each="barbershop:${barbershop}">
+
+                        <input style="font-weight: bold" type="radio" name="chosenBarbershop" th:text="${Barbershop.getName()}" th:value="${Barbershop.getName()}">
+                    </li>
+                </ul>
+                <button type="submit" class="btn btn-outline-secondary" style="margin-left: 190px; color: darkgreen;margin-top: 40px; margin-right: 15px; text-decoration: none; font-family: 'Arial Rounded MT Bold', sans-serif">Поднеси</button>
+            </form>
+        </div>
+
+        <div style="display: inline; float: left">
+            <ul style="list-style: none">
+                <b style="font-family: 'Arial Rounded MT Bold',sans-serif; font-style: oblique">Растојание во km</b><br/>
+                <li th:each="distance:${distances}" style="font-weight: bold" th:text="${distance}"></li>
+            </ul>
+        </div>
+
+        <div style="display: inline; float: left">
+            <ul style="list-style: none">
+                <b style="font-family: 'Arial Rounded MT Bold',sans-serif; font-style: oblique">Време на пристигнување</b><br/>
+                <li th:each="time:${times}" style="font-weight: bold" th:text="${time}"></li>
+            </ul>
+        </div><br/><br/>
+
+    </div>
+
+    <br/><br/><hr>
+    <div class="container" style="align-items: center; padding-right: 100px">
+        <a type="button" class="btn btn-info" href="/home" style="margin-left: -390px; font-family: 'Arial Rounded MT Bold', sans-serif">Назад</a>
+    </div>
+
+</section>
+</div>
